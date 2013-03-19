@@ -1,4 +1,4 @@
-This repo contains some experimental code to explore possiblity of speeding up traversals between partitions of a graph.
+This repository contains some experimental code to explore possiblity of speeding up traversals between partitions of a graph.
 
 ### Details
 ------------
@@ -7,8 +7,8 @@ Consider the following graph:
   P1 -->  P2 --> P3
 
 Now if we want to find a path from Node: p (in P1) to Node: q (in P3), we dont need to traverse the internal nodes of partition P2.
-This implies that by properly preprocessing partitions, we can significantly prune away internal nodes, while taking a hop from unrelated
-partiton. This will result in a shorter graph and hence faster traversals.
+This implies that by properly preprocessing partitions, we can significantly prune away internal nodes when taking a hop from unrelated
+partiton. This will result in a shorter graph to traverse and hence faster traversals.
 
 ### Terminology
 ----------------
@@ -29,9 +29,9 @@ External Graph :- For a given partitioned graph, an external graph represents th
     foreach partition in Graph
         Identify all the 'external nodes'.
         foreach pair(src, dst) in 'external nodes'
-            traverse from src to dst
-            If a shortest path with more than one edge exists,
-            Create a 'hop edge' that caches this path information.
+            Find an intra-partition shortest path from src to dst
+            If such a path with more than one edge exists,
+              Create a 'hop edge' that caches this path information.
         end
     end
 
