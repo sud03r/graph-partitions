@@ -1,7 +1,7 @@
 This repo contains some experimental code to explore possiblity of speeding up traversals between partitions of a graph.
 
-Details:
-========
+### Details
+------------
 
 Consider the following graph:
   P1 -->  P2 --> P3
@@ -10,8 +10,8 @@ Now if we want to find a path from Node: p (in P1) to Node: q (in P3), we dont n
 This implies that by properly preprocessing partitions, we can significantly prune away internal nodes, while taking a hop from unrelated
 partiton. This will result in a shorter graph and hence faster traversals.
 
-Terminology:
-============
+### Terminology
+----------------
 
 External Nodes :- All the nodes in a partition which have an incoming or outgoing inter-partition edge, (i.e Nodes on the partition boundary).
 
@@ -20,13 +20,11 @@ Hop Edges :- Every two external nodes in a partition which are reachable from on
              src to dst of the hop, and avoid traversing internal nodes for an unrelated partition.
 
 External Graph :- For a given partitioned graph, an external graph represents the connectivity between the external nodes. This implies 
-                  the only edges present in an external graph will be:
-                  * Interpartition Edges.
-                  * All Hop Edges
-                  * Graph Edges that connect two external nodes in a partition.
+                  the only edges present in an external graph will be either Interpartition Edges, or Hop Edges or intra-partition 
+                  Graph Edges that connect two external nodes.
 
-Algorithm used for Pruning:
-===========================
+### Algorithm used for Pruning
+------------------------------
 
     foreach partition in Graph
         Identify all the 'external nodes'.
@@ -37,8 +35,8 @@ Algorithm used for Pruning:
         end
     end
 
-Observations:
-==============
+### Observations
+----------------
 
 This however may reduce intra-partition traversals, but inter-partition traversal will still continue to be a bottleneck to performance.
 An idea I was exploring was to create an 'external graph' from the partitioned graph.
@@ -50,9 +48,6 @@ Finding a path between nodes that lie in different partitions will involve:
 
 'External Graph' can be created at the time when graph was being created. A single partition can hold responsiblity for traversing the external graph.
 However, Any subsequent addition/removals to the original graph must be reflected in the external graph as well.
-
-Problems:
-=========
 
 By performing Graph pruning as described above, the resultant graph will be a different representation of the original graph, and the traversal algorithms
 will need to modified to suit the requirements.
