@@ -21,21 +21,21 @@ Hop Edges :- Every two external nodes in a partition which are reachable from on
 
 External Graph :- For a given partitioned graph, an external graph represents the connectivity between the external nodes. This implies 
                   the only edges present in an external graph will be:
-                  - Interpartition Edges.
-                  - All Hop Edges
-                  - Graph Edges that connect two external nodes in a partition.
+                  * Interpartition Edges.
+                  * All Hop Edges
+                  * Graph Edges that connect two external nodes in a partition.
 
 Algorithm used for Pruning:
 ===========================
 
-  foreach partition in Graph
-    Identify all the 'external nodes'.
-      foreach pair(src, dst) in 'external nodes'
-        traverse from src to dst
-        If a shortest path with more than one edge exists,
-        Create a 'hop edge' that caches this path information.
-      end
-  end
+    foreach partition in Graph
+        Identify all the 'external nodes'.
+        foreach pair(src, dst) in 'external nodes'
+            traverse from src to dst
+            If a shortest path with more than one edge exists,
+            Create a 'hop edge' that caches this path information.
+        end
+    end
 
 Observations:
 ==============
